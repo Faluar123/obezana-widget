@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <title>OBEZANA567 Server Status</title>
+  <style>
+    body {
+      background: #0d0d0d;
+      color: #f0f0f0;
+      font-family: Arial, sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+    }
+    .card {
+      background: #1a1a1a;
+      padding: 20px 30px;
+      border-radius: 12px;
+      box-shadow: 0 0 20px rgba(0,0,0,0.5);
+      text-align: center;
+      max-width: 400px;
+      width: 100%;
+    }
+    .title {
+      font-size: 20px;
+      font-weight: bold;
+      margin-bottom: 10px;
+      color: #ff7f50;
+    }
+    .motd {
+      font-size: 14px;
+      margin-bottom: 15px;
+      color: #ccc;
+    }
+    .status {
+      font-size: 16px;
+      margin-bottom: 10px;
+    }
+    .online {
+      color: #4caf50;
+    }
+    .offline {
+      color: #f44336;
+    }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <div class="title">OBEZANA567 x Halloween Horror</div>
+    <div id="motd" class="motd">Загрузка...</div>
+    <div id="status" class="status">Проверка статуса...</div>
+    <div id="players"></div>
+  </div>
+
+  <script>
+    const serverIP = "185.9.145.8:26562";
+    const apiURL = `https://api.mcsrvstat.us/2/${serverIP}`;
+
+    async function fetchStatus() {
+      try {
+        const res = await fetch(apiURL);
+        const data = await res.json();
+
+        document.getElementById("motd").textContent = data.motd?.clean?.join(" ") || "—";
+
+        if (data.online) {
+          document.getElementById("status").innerHTML = `<span class="online">🟢 Онлайн</span>`;
+          document.getElementById("players").textContent = `Игроки: ${data.players.online}/${data.players.max}`;
+        } else {
+          document.getElementById("status").innerHTML = `<span class="offline">🔴 Оффлайн</span>`;
+          document.getElementById("players").textContent = "";
+        }
+      } catch (err) {
+        document.getElementById("status").innerHTML = `<span class="offline">Ошибка загрузки</span>`;
+        console.error(err);
+      }
+    }
+
+    fetchStatus();
+    setInterval(fetchStatus, 30000); // обновление каждые 30 секунд
+  </script>
+</body>
+</html>
