@@ -11,22 +11,18 @@
         width: 100%;
         overflow: hidden;
       }
-      #app {
+      iframe {
         width: 100%;
         height: 100%;
+        border: none;
       }
     </style>
-    <script src="https://cdn.jsdelivr.net/npm/@widgetbot/html-embed"></script>
   </head>
   <body>
-    <div id="app"></div>
-    <script>
-      new Crate({
-        server: "1398017506710392932",
-        channel: "1417563012306571406",
-        location: ["app"],
-        style: "height:100%;width:100%;"
-      })
-    </script>
+    <iframe
+      src="https://e.widgetbot.io/channels/1398017506710392932/1417563012306571406"
+      allowtransparency="true"
+      sandbox="allow-popups allow-popups-to-escape-sandbox allow-same-origin allow-scripts"
+    ></iframe>
   </body>
 </html>
